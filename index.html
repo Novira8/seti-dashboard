@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Продажи в торговые сети</title>
+<style>
+:root{
+  color-scheme:light;
+  --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --flag:#c3c2b7;
+  --up:#006300; --down:#d03b3b;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#0d0d0d; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --flag:#4a4a46;
+    --up:#0ca30c; --down:#e66767;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#0d0d0d; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --flag:#4a4a46;
+  --up:#0ca30c; --down:#e66767;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--ink2);margin:0 0 6px}
+.note{color:var(--muted);font-size:13px;margin:0 0 22px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px}
+.tile,.card{background:var(--surface);border:1px solid var(--ring);border-radius:12px}
+.tile{padding:14px 16px}
+.tile .k{color:var(--ink2);font-size:13px}
+.tile .v{font-size:26px;font-weight:600;margin-top:2px}
+.tile .d{font-size:13px;color:var(--ink2)}
+.up{color:var(--up)} .down{color:var(--down)}
+.card{padding:18px 18px 14px;margin-bottom:16px}
+.card h2{font-size:17px;margin:0 0 2px}
+.card .hint{color:var(--ink2);font-size:13px;margin:0 0 10px}
+.how{color:var(--muted);font-size:12.5px;margin:10px 0 0;border-top:1px solid var(--grid);padding-top:8px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink2);margin:0 0 8px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{fill:var(--muted);font-size:11px;font-family:inherit}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.list h3{font-size:14px;margin:0 0 8px;color:var(--ink2);font-weight:600}
+.row{display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:center;font-size:13px;margin:5px 0}
+.row .n{color:var(--muted);text-align:right}
+.row .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .val{font-variant-numeric:tabular-nums;color:var(--ink2)}
+.bar{grid-column:2/4;height:6px;border-radius:0 4px 4px 0;background:var(--s1);margin-top:-2px}
+.bar.o{background:var(--s2)}
+.zero{font-size:38px;font-weight:600}
+#tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ring);
+  box-shadow:0 4px 14px rgba(0,0,0,.12);border-radius:8px;padding:7px 10px;font-size:13px;display:none;z-index:9;max-width:260px}
+#tip b{display:block}
+button.tbl{background:none;border:1px solid var(--axis);color:var(--ink2);border-radius:8px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px;font-variant-numeric:tabular-nums}
+th,td{padding:5px 8px;border-bottom:1px solid var(--grid);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--ink2);font-weight:600}
+.tablewrap{overflow-x:auto}
+.disc{color:var(--muted);font-size:12.5px;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Продажи в торговые сети, 2017–2020</h1>
+  <p class="sub">Поставщик бытовых товаров: 8 торговых сетей и мелкие покупатели, 218 товаров, июль 2017 — ноябрь 2020.</p>
+  <p class="note">Все суммы в гривнах без НДС (в исходной таблице с НДС 20%, разделено на 1,2). Декабрь 2020 не закрыт, в итоги не входит. Мелкие покупатели обезличены.</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="card">
+    <h2>1. Продажи по месяцам</h2>
+    <p class="hint">Пики в декабре и январе, спад весной и летом, провал в апреле–июле 2020.</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Закрытый месяц</span><span><i style="background:var(--flag)"></i>Незакрытый месяц (декабрь 2020)</span></div>
+    <div id="c1"></div>
+    <p class="how">Как посчитано: сумма колонки «ВЫРУЧКА» по всем товарным строкам основного листа месяца, делённая на 1,2. Копии листов, итоговые и служебные строки не берутся. Сумма сверена с итогом каждого листа: сходится в 41 месяце из 42, в июле 2017 итог в самом листе равен 0.</p>
+  </div>
+
+  <div class="card">
+    <h2>2. Топ товаров за весь закрытый период</h2>
+    <p class="hint">В штуках лидируют дешёвые позиции (крышки, зажимы), в деньгах на 4-м, 6-м, 7-м и 10-м местах электросушилки для обуви.</p>
+    <div class="two">
+      <div class="list" id="topSht"><h3>В штуках</h3></div>
+      <div class="list" id="topGrn"><h3>В деньгах, грн без НДС</h3></div>
+    </div>
+    <p class="how">Как посчитано: товар определяется по названию в 1С, потому что у каждой сети свой штрихкод одного товара. Штуки = сумма «Продажи, шт», деньги = сумма «ВЫРУЧКА» / 1,2, июль 2017 — ноябрь 2020. Похожие названия в 1С (например, электросушилки «Універсальна» и «Універсальна ел.пристрій») — разные товары, это подтвердил владелец данных.</p>
+  </div>
+
+  <div class="card">
+    <h2>3. Средняя выручка на одну сеть за месяц</h2>
+    <p class="hint">Средний чек считаем на сеть: сколько в среднем одна сеть приносит за месяц.</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Выручка на одну активную сеть</span></div>
+    <div id="c3"></div>
+    <div class="list" id="seti" style="margin-top:14px"><h3>Сколько принёс каждый покупатель за весь период, грн без НДС</h3></div>
+    <p class="how">Как посчитано: выручка месяца без НДС делится на число покупателей, у которых в этом месяце была выручка больше нуля. Отделы одной сети (Эпицентр 10/30/50/100, Новая линия 10/30/50) объединены в одну сеть. Заказов в таблице нет, поэтому средний чек на заказ посчитать нельзя.</p>
+  </div>
+
+  <div class="card">
+    <h2>4. Возвраты</h2>
+    <div class="two">
+      <div><div class="zero" id="vzSum">0 грн · 0%</div><p class="hint" id="vzSub">от выручки за весь период</p></div>
+      <p class="hint" style="margin:0" id="vzText">Возвраты оформлялись обменом 1 к 1: покупатель получал такой же товар, деньги не возвращались. Поэтому выручку возвраты не уменьшают, и отдельного графика нет.</p>
+    </div>
+    <p class="how">Как посчитано: сумма строк с отрицательной выручкой или отрицательными штуками за закрытый период (июль 2017 — ноябрь 2020). Такие строки вычитаются из выручки и топов. Правило обмена 1:1 подтвердил владелец данных.</p>
+  </div>
+
+  <div class="card">
+    <h2>5. Динамика: год к году</h2>
+    <p class="hint">Каждая линия — один год. Так видно, лучше или хуже был тот же месяц год назад.</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>2018</span><span><i style="background:var(--s2)"></i>2019</span><span><i style="background:var(--s3)"></i>2020</span></div>
+    <div id="c5"></div>
+    <button class="tbl" id="tblBtn">Показать таблицу по месяцам</button>
+    <div class="tablewrap" id="tbl" hidden></div>
+    <p class="how">Как посчитано: выручка месяца без НДС. «К прошлому месяцу» = (месяц / предыдущий месяц − 1), «к году назад» = (месяц / тот же месяц прошлого года − 1). Декабрь 2020 не закрыт и не показан.</p>
+  </div>
+
+  <div class="card">
+    <h2>6. Деньги, которые поступили от сетей</h2>
+    <p class="hint">Это то, что считал продажей владелец: деньги на счёте. В таблице они записаны только одной суммой за месяц и не за все месяцы.</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Поступило</span><span><i style="background:var(--flag)"></i>Нужна сверка: сумма повторяет прошлый месяц или выглядит ошибкой</span></div>
+    <div id="c6"></div>
+    <p class="how">Как посчитано: строка 2 колонки «ФАКТИЧЕСКИ зашедшие средства» основного листа, делённая на 1,2. До 2018 года и с апреля 2020 колонка пустая или с ошибкой формулы. Серым отмечены месяцы, где сумма совпадает с предыдущим месяцем до гривны, и январь 2018 (74 тыс. при выручке 835 тыс.). По сетям поступления не разбиты, поэтому все блоки выше считаются по выручке из отчёта сети.</p>
+  </div>
+
+  <div class="card">
+    <h2>7. Ошибки в данных</h2>
+    <p class="hint" id="oshSum"></p>
+    <div class="tablewrap" id="osh"></div>
+    <p class="how">Как посчитано: строки, где чего-то не хватает или в числе стоит текст. Ни одна строка не выброшена. Нет названия по 1С — берём название из отчёта сети. Нет сети — выручка остаётся в месяце, а в число сетей строка не входит. Пустая выручка при цене и штуках — считаем «цена × шт». Текст вместо числа — считаем как 0 и показываем здесь. Названия сетей не выводятся: среди них есть фамилии ФОП.</p>
+  </div>
+
+  <p class="disc">Учебная работа по реальной обезличенной выгрузке. Расчёт по правилам владельца данных, налоговой или бухгалтерской консультацией не является.</p>
+</div>
+<div id="tip"></div>
+<script src="data.js"></script>
+<script>
+(function(){
+const D = window.DATA;
+const MN = ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
+const MNF = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+const fmt = v => Math.round(v).toLocaleString("ru-RU").replace(/,/g," ");
+const kfmt = v => v >= 1e6 ? (v/1e6).toFixed(1).replace(".",",")+" млн" : Math.round(v/1000)+" тыс.";
+const pct = v => (v>0?"+":"") + (v*100).toFixed(1).replace(".",",") + "%";
+const tip = document.getElementById("tip");
+function showTip(e, html){ tip.innerHTML = html; tip.style.display="block";
+  const x = Math.min(e.clientX+14, innerWidth-tip.offsetWidth-8); tip.style.left=x+"px"; tip.style.top=(e.clientY+14)+"px"; }
+function hideTip(){ tip.style.display="none"; }
+const NS="http://www.w3.org/2000/svg";
+function el(tag, attrs, parent){ const n=document.createElementNS(NS,tag); for(const k in attrs) n.setAttribute(k,attrs[k]); if(parent) parent.appendChild(n); return n; }
+function niceMax(v){ const p=Math.pow(10,Math.floor(Math.log10(v))); const f=v/p; return (f<=1?1:f<=1.2?1.2:f<=1.6?1.6:f<=2?2:f<=2.5?2.5:f<=4?4:f<=5?5:f<=8?8:10)*p; }
+function axes(svg, W, H, L, B, T, max){
+  for(let i=0;i<=4;i++){ const y=T+(H-T-B)*(1-i/4);
+    el("line",{x1:L,x2:W,y1:y,y2:y,stroke:i?"var(--grid)":"var(--axis)","stroke-width":1},svg);
+    const t=el("text",{x:L-6,y:y+4,"text-anchor":"end"},svg); t.textContent=kfmt(max*i/4).replace(" тыс.","к").replace(" млн","М"); }
+}
+// плитки
+const M = D.months, closed = M.filter(m=>!m.otkryt);
+const last = closed[closed.length-1], prev = closed[closed.length-2];
+const ly = closed.find(m=>m.y===last.y-1 && m.m===last.m);
+const sum = a => a.reduce((s,m)=>s+m.vyr,0);
+const y2019 = sum(closed.filter(m=>m.y===2019)), y2018 = sum(closed.filter(m=>m.y===2018));
+const tiles = [
+  ["Выручка за закрытый период", fmt(sum(closed))+" грн", "июль 2017 — ноябрь 2020, без НДС"],
+  ["Выручка за 2019 год", fmt(y2019)+" грн", '<span class="'+(y2019>=y2018?"up":"down")+'">'+(y2019>=y2018?"▲ ":"▼ ")+pct(y2019/y2018-1)+"</span> к 2018 году"],
+  ["Ноябрь 2020 к октябрю", '<span class="'+(last.vyr>=prev.vyr?"up":"down")+'">'+(last.vyr>=prev.vyr?"▲ ":"▼ ")+pct(last.vyr/prev.vyr-1)+"</span>", fmt(last.vyr)+" против "+fmt(prev.vyr)+" грн"],
+  ["Ноябрь 2020 к ноябрю 2019", '<span class="'+(last.vyr>=ly.vyr?"up":"down")+'">'+(last.vyr>=ly.vyr?"▲ ":"▼ ")+pct(last.vyr/ly.vyr-1)+"</span>", fmt(last.vyr)+" против "+fmt(ly.vyr)+" грн"]
+];
+document.getElementById("tiles").innerHTML = tiles.map(t=>'<div class="tile"><div class="k">'+t[0]+'</div><div class="v">'+t[1]+'</div><div class="d">'+t[2]+'</div></div>').join("");
+
+// столбики по месяцам (общая функция)
+function bars(id, rows, val, color, tipf){
+  const W=900,H=260,L=44,B=34,T=10; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img"});
+  const max=niceMax(Math.max(...rows.map(r=>val(r)||0))); axes(svg,W,H,L,B,T,max);
+  const n=rows.length, step=(W-L)/n, bw=Math.max(step-2,2);
+  rows.forEach((r,i)=>{ const v=val(r); const x=L+i*step+1;
+    if(r.m===1 || i===0){ const t=el("text",{x:x,y:H-B+16},svg); t.textContent=r.y; }
+    if(r.otkryt){ el("rect",{x:x,y:H-B-24,width:bw,height:24,rx:3,fill:"var(--flag)"},svg);
+      const t=el("text",{x:x+bw,y:H-B-30,"text-anchor":"end"},svg); t.textContent="дек 2020: не закрыт"; }
+    const h = v ? Math.max((H-T-B)*v/max,1.5) : 0, y=H-B-h;
+    if(h) el("path",{d:`M${x},${H-B}V${y+Math.min(4,h)}q0,-${Math.min(4,h)} ${Math.min(4,bw/2)},-${Math.min(4,h)}H${x+bw-Math.min(4,bw/2)}q${Math.min(4,bw/2)},0 ${Math.min(4,bw/2)},${Math.min(4,h)}V${H-B}Z`,fill:color(r)},svg);
+    if(!v && !r.otkryt){ const t=el("text",{x:x+bw/2,y:H-B-4,"text-anchor":"middle"},svg); t.textContent="–"; }
+    const hit=el("rect",{x:L+i*step,y:T,width:step,height:H-T-B,fill:"transparent"},svg);
+    hit.addEventListener("mousemove",e=>showTip(e,tipf(r))); hit.addEventListener("mouseleave",hideTip);
+  });
+  document.getElementById(id).appendChild(svg);
+}
+const lbl = r => MNF[r.m-1]+" "+r.y;
+bars("c1", M, r=>r.otkryt? 0 : r.vyr, r=>r.otkryt?"var(--flag)":"var(--s1)",
+  r=>"<b>"+lbl(r)+"</b>"+(r.otkryt?"Месяц не закрыт, данных почти нет":fmt(r.vyr)+" грн · "+fmt(r.sht)+" шт · сетей: "+r.setey));
+
+// топы
+function list(id, rows, unit, cls){ const max=rows[0][1]; const box=document.getElementById(id);
+  rows.forEach((r,i)=>{ const d=document.createElement("div"); d.className="row";
+    d.innerHTML='<span class="n">'+(i+1)+'</span><span class="name" title="'+r[0].replace(/"/g,"&quot;")+'">'+r[0]+'</span><span class="val">'+fmt(r[1])+unit+'</span><div class="bar '+cls+'" style="width:'+(r[1]/max*100)+'%"></div>';
+    box.appendChild(d); }); }
+list("topSht", D.top_sht, " шт", "o");
+list("topGrn", D.top_grn, "", "");
+const seti = D.seti.slice(0,8); const rest = D.seti.slice(8).reduce((s,r)=>s+r[1],0);
+seti.push(["Остальные ("+(D.seti.length-8)+" покупателей)", rest]);
+list("seti", seti, "", "");
+
+// средняя на сеть
+bars("c3", closed, r=>r.setey? r.vyr/r.setey : 0, ()=>"var(--s1)",
+  r=>"<b>"+lbl(r)+"</b>"+fmt(r.vyr/r.setey)+" грн на сеть<br>"+fmt(r.vyr)+" грн / "+r.setey+" покупателей");
+
+// год к году: линии
+(function(){ const W=900,H=260,L=44,B=30,T=10; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img"});
+  const years=[[2018,"var(--s1)"],[2019,"var(--s2)"],[2020,"var(--s3)"]];
+  const rows=closed.filter(r=>r.y>=2018); const max=niceMax(Math.max(...rows.map(r=>r.vyr))); axes(svg,W,H,L,B,T,max);
+  const X=m=>L+20+(W-L-40)*(m-1)/11, Y=v=>H-B-(H-T-B)*v/max;
+  MN.forEach((n,i)=>{ const t=el("text",{x:X(i+1),y:H-B+16,"text-anchor":"middle"},svg); t.textContent=n; });
+  years.forEach(([y,c])=>{ const pts=rows.filter(r=>r.y===y);
+    el("path",{d:pts.map((r,i)=>(i?"L":"M")+X(r.m)+","+Y(r.vyr)).join(""),fill:"none",stroke:c,"stroke-width":2,"stroke-linejoin":"round"},svg);
+    const lp=pts[pts.length-1]; const t=el("text",{x:X(lp.m)+6,y:Y(lp.vyr)+4},svg); t.textContent=y; t.style.fill="var(--ink2)";
+  });
+  const cross=el("line",{y1:T,y2:H-B,stroke:"var(--axis)","stroke-width":1,visibility:"hidden"},svg);
+  const dots=years.map(([y,c])=>el("circle",{r:4.5,fill:c,stroke:"var(--surface)","stroke-width":2,visibility:"hidden"},svg));
+  const hit=el("rect",{x:L,y:T,width:W-L,height:H-T-B,fill:"transparent"},svg);
+  hit.addEventListener("mousemove",e=>{ const b=svg.getBoundingClientRect(); const sx=(e.clientX-b.left)*W/b.width;
+    const m=Math.max(1,Math.min(12,Math.round((sx-L-20)/((W-L-40)/11))+1)); cross.setAttribute("x1",X(m)); cross.setAttribute("x2",X(m)); cross.setAttribute("visibility","visible");
+    let html="<b>"+MNF[m-1]+"</b>";
+    years.forEach(([y],k)=>{ const r=rows.find(q=>q.y===y&&q.m===m); if(r){ dots[k].setAttribute("cx",X(m)); dots[k].setAttribute("cy",Y(r.vyr)); dots[k].setAttribute("visibility","visible"); html+=y+": "+fmt(r.vyr)+" грн<br>"; } else dots[k].setAttribute("visibility","hidden"); });
+    showTip(e,html); });
+  hit.addEventListener("mouseleave",()=>{ hideTip(); cross.setAttribute("visibility","hidden"); dots.forEach(d=>d.setAttribute("visibility","hidden")); });
+  document.getElementById("c5").appendChild(svg);
+})();
+
+// таблица
+document.getElementById("tblBtn").addEventListener("click",function(){ const t=document.getElementById("tbl"); t.hidden=!t.hidden; this.textContent=t.hidden?"Показать таблицу по месяцам":"Скрыть таблицу";
+  if(t.innerHTML) return;
+  let h="<table><tr><th>Месяц</th><th>Выручка, грн</th><th>Штук</th><th>Сетей</th><th>К прошлому месяцу</th><th>К году назад</th><th>Поступило, грн</th></tr>";
+  closed.forEach((r,i)=>{ const p=closed[i-1], y=closed.find(q=>q.y===r.y-1&&q.m===r.m);
+    h+="<tr><td>"+lbl(r)+"</td><td>"+fmt(r.vyr)+"</td><td>"+fmt(r.sht)+"</td><td>"+r.setey+"</td><td>"+(p?pct(r.vyr/p.vyr-1):"–")+"</td><td>"+(y?pct(r.vyr/y.vyr-1):"–")+"</td><td>"+(r.dengi?fmt(r.dengi)+(r.flag?" *":""):"–")+"</td></tr>"; });
+  t.innerHTML=h+"</table><p class='how'>* сумма требует сверки (повтор прошлого месяца или ошибка).</p>"; });
+
+// деньги
+const dm = closed.filter(r=>r.y>=2018 && (r.y<2020 || r.m<=3));
+bars("c6", dm, r=>r.dengi, r=>r.flag?"var(--flag)":"var(--s1)",
+  r=>"<b>"+lbl(r)+"</b>"+(r.dengi? fmt(r.dengi)+" грн"+(r.flag==="повтор"?"<br>Та же сумма, что в прошлом месяце":r.flag==="сомнительно"?"<br>Похоже на ошибку в таблице":"") : "В таблице нет суммы")+"<br>Выручка по отчёту сети: "+fmt(r.vyr)+" грн");
+
+// возвраты
+const VZ = D.vozvraty || {grn:0, sht:0, stroki:0};
+if (VZ.stroki) {
+  const all = closed.reduce((s,r)=>s+r.vyr,0);
+  document.getElementById("vzSum").textContent = fmt(VZ.grn)+" грн · "+(VZ.grn/all*100).toFixed(2).replace(".",",")+"%";
+  document.getElementById("vzSub").textContent = "от выручки за весь период · строк: "+VZ.stroki+" · штук: "+fmt(VZ.sht);
+  document.getElementById("vzText").textContent = "В таблице есть строки с минусом. Они уже вычтены из выручки и топов. Обычно возвраты оформлялись обменом 1 к 1, поэтому такие строки стоит сверить с владельцем.";
+}
+
+// ошибки в данных
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const OS = D.oshibki || [];
+document.getElementById("oshSum").textContent = OS.length ? "Найдено строк с замечаниями: "+OS.length+". Ни одна не выброшена, итоги месяцев с ними сходятся с итогами листов так же, как раньше." : "Ошибок не найдено.";
+if (OS.length) document.getElementById("osh").innerHTML = "<table><tr><th>Лист</th><th>Строка</th><th>Что не так и что сделали</th></tr>"+
+  OS.map(o=>"<tr><td>"+esc(o[0])+"</td><td>"+o[1]+"</td><td>"+esc(o[2])+"</td></tr>").join("")+"</table>";
+})();
+</script>
+</body>
+</html>
