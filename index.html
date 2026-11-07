@@ -75,7 +75,7 @@ th{color:var(--ink2);font-weight:600}
 <div class="wrap">
   <h1>Продажи в торговые сети, 2017–2020</h1>
   <p class="sub">Поставщик бытовых товаров: 8 торговых сетей и мелкие покупатели, 218 товаров, июль 2017 — ноябрь 2020.</p>
-  <p class="note">Все суммы в гривнах без НДС (в исходной таблице с НДС 20%, разделено на 1,2). Декабрь 2020 не закрыт, в итоги не входит. Мелкие покупатели обезличены.</p>
+  <p class="note">Все суммы в рублях без НДС (в исходной таблице с НДС 20%, разделено на 1,2). Декабрь 2020 не закрыт, в итоги не входит. Данные учебные, названия сетей вымышленные, мелкие покупатели обезличены.</p>
 
   <div class="tiles" id="tiles"></div>
 
@@ -92,9 +92,9 @@ th{color:var(--ink2);font-weight:600}
     <p class="hint">В штуках лидируют дешёвые позиции (крышки, зажимы), в деньгах на 4-м, 6-м, 7-м и 10-м местах электросушилки для обуви.</p>
     <div class="two">
       <div class="list" id="topSht"><h3>В штуках</h3></div>
-      <div class="list" id="topGrn"><h3>В деньгах, грн без НДС</h3></div>
+      <div class="list" id="topGrn"><h3>В деньгах, ₽ без НДС</h3></div>
     </div>
-    <p class="how">Как посчитано: товар определяется по названию в 1С, потому что у каждой сети свой штрихкод одного товара. Штуки = сумма «Продажи, шт», деньги = сумма «ВЫРУЧКА» / 1,2, июль 2017 — ноябрь 2020. Похожие названия в 1С (например, электросушилки «Універсальна» и «Універсальна ел.пристрій») — разные товары, это подтвердил владелец данных.</p>
+    <p class="how">Как посчитано: товар определяется по названию в 1С, потому что у каждой сети свой штрихкод одного товара. Штуки = сумма «Продажи, шт», деньги = сумма «ВЫРУЧКА» / 1,2, июль 2017 — ноябрь 2020. Похожие названия в 1С (например, электросушилки «Универсальная» и «Универсальная, электроприбор») — разные товары, это подтвердил владелец данных.</p>
   </div>
 
   <div class="card">
@@ -102,14 +102,14 @@ th{color:var(--ink2);font-weight:600}
     <p class="hint">Средний чек считаем на сеть: сколько в среднем одна сеть приносит за месяц.</p>
     <div class="legend"><span><i style="background:var(--s1)"></i>Выручка на одну активную сеть</span></div>
     <div id="c3"></div>
-    <div class="list" id="seti" style="margin-top:14px"><h3>Сколько принёс каждый покупатель за весь период, грн без НДС</h3></div>
-    <p class="how">Как посчитано: выручка месяца без НДС делится на число покупателей, у которых в этом месяце была выручка больше нуля. Отделы одной сети (Эпицентр 10/30/50/100, Новая линия 10/30/50) объединены в одну сеть. Заказов в таблице нет, поэтому средний чек на заказ посчитать нельзя.</p>
+    <div class="list" id="seti" style="margin-top:14px"><h3>Сколько принёс каждый покупатель за весь период, ₽ без НДС</h3></div>
+    <p class="how">Как посчитано: выручка месяца без НДС делится на число покупателей, у которых в этом месяце была выручка больше нуля. Отделы одной сети (ГиперДом 10/30/50/100, СтройЛиния 10/30/50) объединены в одну сеть. Заказов в таблице нет, поэтому средний чек на заказ посчитать нельзя.</p>
   </div>
 
   <div class="card">
     <h2>4. Возвраты</h2>
     <div class="two">
-      <div><div class="zero" id="vzSum">0 грн · 0%</div><p class="hint" id="vzSub">от выручки за весь период</p></div>
+      <div><div class="zero" id="vzSum">0 ₽ · 0%</div><p class="hint" id="vzSub">от выручки за весь период</p></div>
       <p class="hint" style="margin:0" id="vzText">Возвраты оформлялись обменом 1 к 1: покупатель получал такой же товар, деньги не возвращались. Поэтому выручку возвраты не уменьшают, и отдельного графика нет.</p>
     </div>
     <p class="how">Как посчитано: сумма строк с отрицательной выручкой или отрицательными штуками за закрытый период (июль 2017 — ноябрь 2020). Такие строки вычитаются из выручки и топов. Правило обмена 1:1 подтвердил владелец данных.</p>
@@ -130,17 +130,17 @@ th{color:var(--ink2);font-weight:600}
     <p class="hint">Это то, что считал продажей владелец: деньги на счёте. В таблице они записаны только одной суммой за месяц и не за все месяцы.</p>
     <div class="legend"><span><i style="background:var(--s1)"></i>Поступило</span><span><i style="background:var(--flag)"></i>Нужна сверка: сумма повторяет прошлый месяц или выглядит ошибкой</span></div>
     <div id="c6"></div>
-    <p class="how">Как посчитано: строка 2 колонки «ФАКТИЧЕСКИ зашедшие средства» основного листа, делённая на 1,2. До 2018 года и с апреля 2020 колонка пустая или с ошибкой формулы. Серым отмечены месяцы, где сумма совпадает с предыдущим месяцем до гривны, и январь 2018 (74 тыс. при выручке 835 тыс.). По сетям поступления не разбиты, поэтому все блоки выше считаются по выручке из отчёта сети.</p>
+    <p class="how">Как посчитано: строка 2 колонки «ФАКТИЧЕСКИ зашедшие средства» основного листа, делённая на 1,2. До 2018 года и с апреля 2020 колонка пустая или с ошибкой формулы. Серым отмечены месяцы, где сумма совпадает с предыдущим месяцем до рубля, и январь 2018 (74 тыс. при выручке 835 тыс.). По сетям поступления не разбиты, поэтому все блоки выше считаются по выручке из отчёта сети.</p>
   </div>
 
   <div class="card">
     <h2>7. Ошибки в данных</h2>
     <p class="hint" id="oshSum"></p>
     <div class="tablewrap" id="osh"></div>
-    <p class="how">Как посчитано: строки, где чего-то не хватает или в числе стоит текст. Ни одна строка не выброшена. Нет названия по 1С — берём название из отчёта сети. Нет сети — выручка остаётся в месяце, а в число сетей строка не входит. Пустая выручка при цене и штуках — считаем «цена × шт». Текст вместо числа — считаем как 0 и показываем здесь. Названия сетей не выводятся: среди них есть фамилии ФОП.</p>
+    <p class="how">Как посчитано: строки, где чего-то не хватает или в числе стоит текст. Ни одна строка не выброшена. Нет названия по 1С — берём название из отчёта сети. Нет сети — выручка остаётся в месяце, а в число сетей строка не входит. Пустая выручка при цене и штуках — считаем «цена × шт». Текст вместо числа — считаем как 0 и показываем здесь. Названия сетей не выводятся: среди них есть фамилии частных предпринимателей.</p>
   </div>
 
-  <p class="disc">Учебная работа по реальной обезличенной выгрузке. Расчёт по правилам владельца данных, налоговой или бухгалтерской консультацией не является.</p>
+  <p class="disc">Учебная работа по реальной обезличенной выгрузке. Данные учебные, для демонстрации. Названия торговых сетей вымышлены, совпадения с настоящими сетями случайны. Расчёт по правилам владельца данных, налоговой или бухгалтерской консультацией не является.</p>
 </div>
 <div id="tip"></div>
 <script src="data.js"></script>
@@ -171,10 +171,10 @@ const ly = closed.find(m=>m.y===last.y-1 && m.m===last.m);
 const sum = a => a.reduce((s,m)=>s+m.vyr,0);
 const y2019 = sum(closed.filter(m=>m.y===2019)), y2018 = sum(closed.filter(m=>m.y===2018));
 const tiles = [
-  ["Выручка за закрытый период", fmt(sum(closed))+" грн", "июль 2017 — ноябрь 2020, без НДС"],
-  ["Выручка за 2019 год", fmt(y2019)+" грн", '<span class="'+(y2019>=y2018?"up":"down")+'">'+(y2019>=y2018?"▲ ":"▼ ")+pct(y2019/y2018-1)+"</span> к 2018 году"],
-  ["Ноябрь 2020 к октябрю", '<span class="'+(last.vyr>=prev.vyr?"up":"down")+'">'+(last.vyr>=prev.vyr?"▲ ":"▼ ")+pct(last.vyr/prev.vyr-1)+"</span>", fmt(last.vyr)+" против "+fmt(prev.vyr)+" грн"],
-  ["Ноябрь 2020 к ноябрю 2019", '<span class="'+(last.vyr>=ly.vyr?"up":"down")+'">'+(last.vyr>=ly.vyr?"▲ ":"▼ ")+pct(last.vyr/ly.vyr-1)+"</span>", fmt(last.vyr)+" против "+fmt(ly.vyr)+" грн"]
+  ["Выручка за закрытый период", fmt(sum(closed))+" ₽", "июль 2017 — ноябрь 2020, без НДС"],
+  ["Выручка за 2019 год", fmt(y2019)+" ₽", '<span class="'+(y2019>=y2018?"up":"down")+'">'+(y2019>=y2018?"▲ ":"▼ ")+pct(y2019/y2018-1)+"</span> к 2018 году"],
+  ["Ноябрь 2020 к октябрю", '<span class="'+(last.vyr>=prev.vyr?"up":"down")+'">'+(last.vyr>=prev.vyr?"▲ ":"▼ ")+pct(last.vyr/prev.vyr-1)+"</span>", fmt(last.vyr)+" против "+fmt(prev.vyr)+" ₽"],
+  ["Ноябрь 2020 к ноябрю 2019", '<span class="'+(last.vyr>=ly.vyr?"up":"down")+'">'+(last.vyr>=ly.vyr?"▲ ":"▼ ")+pct(last.vyr/ly.vyr-1)+"</span>", fmt(last.vyr)+" против "+fmt(ly.vyr)+" ₽"]
 ];
 document.getElementById("tiles").innerHTML = tiles.map(t=>'<div class="tile"><div class="k">'+t[0]+'</div><div class="v">'+t[1]+'</div><div class="d">'+t[2]+'</div></div>').join("");
 
@@ -197,7 +197,7 @@ function bars(id, rows, val, color, tipf){
 }
 const lbl = r => MNF[r.m-1]+" "+r.y;
 bars("c1", M, r=>r.otkryt? 0 : r.vyr, r=>r.otkryt?"var(--flag)":"var(--s1)",
-  r=>"<b>"+lbl(r)+"</b>"+(r.otkryt?"Месяц не закрыт, данных почти нет":fmt(r.vyr)+" грн · "+fmt(r.sht)+" шт · сетей: "+r.setey));
+  r=>"<b>"+lbl(r)+"</b>"+(r.otkryt?"Месяц не закрыт, данных почти нет":fmt(r.vyr)+" ₽ · "+fmt(r.sht)+" шт · сетей: "+r.setey));
 
 // топы
 function list(id, rows, unit, cls){ const max=rows[0][1]; const box=document.getElementById(id);
@@ -212,7 +212,7 @@ list("seti", seti, "", "");
 
 // средняя на сеть
 bars("c3", closed, r=>r.setey? r.vyr/r.setey : 0, ()=>"var(--s1)",
-  r=>"<b>"+lbl(r)+"</b>"+fmt(r.vyr/r.setey)+" грн на сеть<br>"+fmt(r.vyr)+" грн / "+r.setey+" покупателей");
+  r=>"<b>"+lbl(r)+"</b>"+fmt(r.vyr/r.setey)+" ₽ на сеть<br>"+fmt(r.vyr)+" ₽ / "+r.setey+" покупателей");
 
 // год к году: линии
 (function(){ const W=900,H=260,L=44,B=30,T=10; const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img"});
@@ -230,7 +230,7 @@ bars("c3", closed, r=>r.setey? r.vyr/r.setey : 0, ()=>"var(--s1)",
   hit.addEventListener("mousemove",e=>{ const b=svg.getBoundingClientRect(); const sx=(e.clientX-b.left)*W/b.width;
     const m=Math.max(1,Math.min(12,Math.round((sx-L-20)/((W-L-40)/11))+1)); cross.setAttribute("x1",X(m)); cross.setAttribute("x2",X(m)); cross.setAttribute("visibility","visible");
     let html="<b>"+MNF[m-1]+"</b>";
-    years.forEach(([y],k)=>{ const r=rows.find(q=>q.y===y&&q.m===m); if(r){ dots[k].setAttribute("cx",X(m)); dots[k].setAttribute("cy",Y(r.vyr)); dots[k].setAttribute("visibility","visible"); html+=y+": "+fmt(r.vyr)+" грн<br>"; } else dots[k].setAttribute("visibility","hidden"); });
+    years.forEach(([y],k)=>{ const r=rows.find(q=>q.y===y&&q.m===m); if(r){ dots[k].setAttribute("cx",X(m)); dots[k].setAttribute("cy",Y(r.vyr)); dots[k].setAttribute("visibility","visible"); html+=y+": "+fmt(r.vyr)+" ₽<br>"; } else dots[k].setAttribute("visibility","hidden"); });
     showTip(e,html); });
   hit.addEventListener("mouseleave",()=>{ hideTip(); cross.setAttribute("visibility","hidden"); dots.forEach(d=>d.setAttribute("visibility","hidden")); });
   document.getElementById("c5").appendChild(svg);
@@ -239,7 +239,7 @@ bars("c3", closed, r=>r.setey? r.vyr/r.setey : 0, ()=>"var(--s1)",
 // таблица
 document.getElementById("tblBtn").addEventListener("click",function(){ const t=document.getElementById("tbl"); t.hidden=!t.hidden; this.textContent=t.hidden?"Показать таблицу по месяцам":"Скрыть таблицу";
   if(t.innerHTML) return;
-  let h="<table><tr><th>Месяц</th><th>Выручка, грн</th><th>Штук</th><th>Сетей</th><th>К прошлому месяцу</th><th>К году назад</th><th>Поступило, грн</th></tr>";
+  let h="<table><tr><th>Месяц</th><th>Выручка, ₽</th><th>Штук</th><th>Сетей</th><th>К прошлому месяцу</th><th>К году назад</th><th>Поступило, ₽</th></tr>";
   closed.forEach((r,i)=>{ const p=closed[i-1], y=closed.find(q=>q.y===r.y-1&&q.m===r.m);
     h+="<tr><td>"+lbl(r)+"</td><td>"+fmt(r.vyr)+"</td><td>"+fmt(r.sht)+"</td><td>"+r.setey+"</td><td>"+(p?pct(r.vyr/p.vyr-1):"–")+"</td><td>"+(y?pct(r.vyr/y.vyr-1):"–")+"</td><td>"+(r.dengi?fmt(r.dengi)+(r.flag?" *":""):"–")+"</td></tr>"; });
   t.innerHTML=h+"</table><p class='how'>* сумма требует сверки (повтор прошлого месяца или ошибка).</p>"; });
@@ -247,13 +247,13 @@ document.getElementById("tblBtn").addEventListener("click",function(){ const t=d
 // деньги
 const dm = closed.filter(r=>r.y>=2018 && (r.y<2020 || r.m<=3));
 bars("c6", dm, r=>r.dengi, r=>r.flag?"var(--flag)":"var(--s1)",
-  r=>"<b>"+lbl(r)+"</b>"+(r.dengi? fmt(r.dengi)+" грн"+(r.flag==="повтор"?"<br>Та же сумма, что в прошлом месяце":r.flag==="сомнительно"?"<br>Похоже на ошибку в таблице":"") : "В таблице нет суммы")+"<br>Выручка по отчёту сети: "+fmt(r.vyr)+" грн");
+  r=>"<b>"+lbl(r)+"</b>"+(r.dengi? fmt(r.dengi)+" ₽"+(r.flag==="повтор"?"<br>Та же сумма, что в прошлом месяце":r.flag==="сомнительно"?"<br>Похоже на ошибку в таблице":"") : "В таблице нет суммы")+"<br>Выручка по отчёту сети: "+fmt(r.vyr)+" ₽");
 
 // возвраты
 const VZ = D.vozvraty || {grn:0, sht:0, stroki:0};
 if (VZ.stroki) {
   const all = closed.reduce((s,r)=>s+r.vyr,0);
-  document.getElementById("vzSum").textContent = fmt(VZ.grn)+" грн · "+(VZ.grn/all*100).toFixed(2).replace(".",",")+"%";
+  document.getElementById("vzSum").textContent = fmt(VZ.grn)+" ₽ · "+(VZ.grn/all*100).toFixed(2).replace(".",",")+"%";
   document.getElementById("vzSub").textContent = "от выручки за весь период · строк: "+VZ.stroki+" · штук: "+fmt(VZ.sht);
   document.getElementById("vzText").textContent = "В таблице есть строки с минусом. Они уже вычтены из выручки и топов. Обычно возвраты оформлялись обменом 1 к 1, поэтому такие строки стоит сверить с владельцем.";
 }
